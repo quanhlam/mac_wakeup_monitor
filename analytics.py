@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta
+import math
+from datetime import datetime
 
 
 def is_considered_continuous(seconds, variations = 2):
@@ -28,7 +29,15 @@ def to_human_readable(lst_segments):
       _end = segment[-1].strftime("%d/%m  %H:%M:%S")
       if len(segment) > 1:
         if _start.split()[0] == _end.split()[0]:
-          lst_text.append(f"{_start} -> {_end.split()[1]}")
+          desc = ""
+          secs_diff = (segment[-1] - segment[0]).total_seconds()
+          if secs_diff < 60:
+            desc = f"{secs_diff} seconds"
+          elif secs_diff < 60 * 60:
+            desc = f"{math.ceil(secs_diff/(60))} minutes"
+          else:
+            desc = f"{math.ceil(secs_diff/(60*60))} hours"
+          lst_text.append(f"{_start} -> {_end.split()[1]} ({desc})")
         else:
           lst_text.append(f"{_start} -> {_end}")
       else:
@@ -40,7 +49,7 @@ if __name__ == '__main__':
 
   # Input
   file = "time-track.log"
-  start_time = "2023-12-17 00:00:00"
+  start_time = "2023-12-16 00:00:00"
   end_time = "2023-12-18 00:00:00"
 
   f = open(file, "r+")

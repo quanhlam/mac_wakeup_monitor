@@ -1,5 +1,5 @@
 import math
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def is_considered_continuous(seconds, variations = 2):
@@ -49,13 +49,15 @@ if __name__ == '__main__':
 
   # Input
   file = "time-track.log"
-  start_time = "2023-12-16 00:00:00"
-  end_time = "2023-12-18 00:00:00"
+  #start_time = "2023-12-16 00:00:00"
+  #end_time = "2023-12-18 00:00:00"
+  #_start = datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
+  #_end = datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S")
+  _start = datetime.now() - timedelta(days=1)
+  _end = datetime.now()
+
 
   f = open(file, "r+")
-
-  _start = datetime.strptime(start_time, "%Y-%m-%d %H:%M:%S")
-  _end = datetime.strptime(end_time, "%Y-%m-%d %H:%M:%S")
 
   try:
     lines = f.readlines()
@@ -63,6 +65,7 @@ if __name__ == '__main__':
     time_range = filter(lambda x: x >= _start and x < _end, fmt_lines)
     continuous_segments = get_continuous_segments(time_range)
     display_text_lst = to_human_readable(continuous_segments)
+    print(f"=== Activities in the last {math.floor((_end-_start).total_seconds()/3600)} hours ===")
     for text in display_text_lst:
         print(text)
 

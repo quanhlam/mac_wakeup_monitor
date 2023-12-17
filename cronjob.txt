@@ -1,0 +1,1 @@
+* * * * * /Users/Quan_Lam/repos/personal/automations/health-check.sh

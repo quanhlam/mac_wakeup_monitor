@@ -12,7 +12,7 @@ def get_continuous_segments(lst_times):
         _cur_cont_segment.append(tr)
       elif is_considered_continuous((tr - _cur_cont_segment[-1]).total_seconds()):
         _cur_cont_segment.append(tr)
-      elif (tr - _cur_cont_segment[-1]).total_seconds() > 1:
+      else:
         segments.append(_cur_cont_segment)
         _cur_cont_segment = []
   
